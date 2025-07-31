@@ -10,19 +10,31 @@ A simple Flask web application that provides user registration functionality wit
 
 ## Setup Guide
 
-### 1. Install Dependencies
+### 1. Create Virtual Environment (Recommended)
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# On macOS/Linux:
+source venv/bin/activate
+# On Windows:
+venv\Scripts\activate`
+```
+
+### 2. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Setup MySQL Database
+### 3. Setup MySQL Database
 Create a MySQL database and table using the provided SQL file:
 ```bash
 mysql -u your_username < setup_db.sql
 ```
 Note: Default username is `root`
 
-### 3. Run the Application
+### 4. Run the Application
 ```bash
 python app.py
 ```

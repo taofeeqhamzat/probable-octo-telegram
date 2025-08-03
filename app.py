@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+from werkzeug.security import generate_password_hash, check_password_hash
  
 app = Flask(__name__)
 app.secret_key = 'flask-app'
@@ -27,6 +28,7 @@ def signup():
         if error is None:
             # Here you would typically save the user to a database
             # For now, we'll just redirect to home with a success message
+            hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
             flash('Account created successfully!', 'success')
             return redirect(url_for('home'))
         else:

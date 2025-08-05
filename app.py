@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import MySQLdb
+from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
 
@@ -20,7 +21,9 @@ def home():
       cursor = connection.cursor()
       
       # # Add test row to 'user' table
-      cursor.execute("INSERT INTO tbl_user (username, password) VALUES (%s, %s)", ('test_user', 'strong_password'))
+      password = 'strong_password'
+      hashed_password = generate_password_hash(password)
+      cursor.execute("INSERT INTO tbl_user (username, password) VALUES (%s, %s)", ('test_user', hashed_password))
       connection.commit()
       
       # Execute SELECT and fetch results

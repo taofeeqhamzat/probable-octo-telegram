@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import MySQLdb
 from werkzeug.security import generate_password_hash
+import random
 
 app = Flask(__name__)
 

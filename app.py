@@ -1,10 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import MySQLdb
 from werkzeug.security import generate_password_hash
-import random
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'flask-app'
+app.secret_key = os.getenv('SECRET_KEY', 'flask-app')
  
 @app.route('/')
 def home():
@@ -32,11 +36,11 @@ def signup():
             print(f"Attempting to connect to database...")
             # Create database connection
             connection = MySQLdb.connect(
-               host='localhost',
-               port=3306,
-               user='root',
-               passwd='', # Leave blank or replace with your actual password
-               db='app_database'
+               host=os.getenv('DB_HOST', 'localhost'),
+               port=int(os.getenv('DB_PORT', 3306)),
+               user=os.getenv('DB_USER', 'root'),
+               passwd=os.getenv('DB_PASSWORD', ''),
+               db=os.getenv('DB_NAME', 'app_database')
                )
             
             cursor = connection.cursor()
@@ -73,4 +77,4 @@ def signup():
     return render_template('signup.html')
  
 if __name__ == '__main__':
-   app.run(debug=True)
+   app.run(debug=os.getenv('DEBUG', 'False').lower() == 'true')

@@ -21,13 +21,14 @@ def home():
       cursor = connection.cursor()
       
       # # Add test row to 'user' table
+      user = 'test_user_' + str(random.randint(1, 5000*2))
       password = 'strong_password'
       hashed_password = generate_password_hash(password)
-      cursor.execute("INSERT INTO tbl_user (username, password) VALUES (%s, %s)", ('test_user', hashed_password))
+      cursor.execute("INSERT INTO tbl_user (username, password) VALUES (%s, %s)", (user, hashed_password))
       connection.commit()
       
       # Execute SELECT and fetch results
-      cursor.execute("SELECT * FROM tbl_user")
+      cursor.execute(f"SELECT * FROM tbl_user WHERE username = '{user}'")
       data = cursor.fetchall()
       print(f"Query results: {data}")
       print("Database connection successful!")
